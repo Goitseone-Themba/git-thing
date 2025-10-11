@@ -1,0 +1,7 @@
+[package]
+name = "git-thing"
+authors = ["Goitseone Themba <goitseonerozthemba@gmail.com>"]
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
