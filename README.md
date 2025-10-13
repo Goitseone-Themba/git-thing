@@ -20,12 +20,14 @@ A simple and efficient command-line tool to manage multiple Git profiles. Switch
 ### Install from Source
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/yourusername/git-profile-manager.git
    cd git-profile-manager
    ```
 
 2. Build and install:
+
    ```bash
    cargo install --path .
    ```
@@ -33,6 +35,7 @@ A simple and efficient command-line tool to manage multiple Git profiles. Switch
    This will install the `git-profile-manager` binary to your Cargo bin directory (usually `~/.cargo/bin/`).
 
 3. (Optional) Add the Cargo bin directory to your PATH if it's not already:
+
    ```bash
    echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc  # or ~/.zshrc
    source ~/.bashrc  # or ~/.zshrc
@@ -43,7 +46,7 @@ A simple and efficient command-line tool to manage multiple Git profiles. Switch
 ### Add a New Profile
 
 ```bash
-git-profile-manager add \
+git-thing add \
   --profilename work \
   --username work-username \
   --email work@example.com \
@@ -53,25 +56,25 @@ git-profile-manager add \
 Or using short flags:
 
 ```bash
-git-profile-manager add -p work -u work-username -e work@example.com -k your-github-token
+git-thing add -p work -u work-username -e work@example.com -k your-github-token
 ```
 
 ### List All Profiles
 
 ```bash
-git-profile-manager list
+git-thing list
 ```
 
 ### Switch to a Profile
 
 ```bash
-git-profile-manager switch --profile work
+git-thing switch --profile work
 ```
 
 Or using short flag:
 
 ```bash
-git-profile-manager switch -p work
+git-thing switch -p work
 ```
 
 ## How It Works
