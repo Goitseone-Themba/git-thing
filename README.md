@@ -1,4 +1,4 @@
-# Git Profile Manager
+# Git Thing
 
 A simple and efficient command-line tool to manage multiple Git profiles. Switch between different Git user profiles (work, personal, etc.) with a single command.
 
@@ -22,8 +22,8 @@ A simple and efficient command-line tool to manage multiple Git profiles. Switch
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/git-profile-manager.git
-   cd git-profile-manager
+   git clone https://github.com/Goitseone-Themba/git-thing.git
+   cd git-thing
    ```
 
 2. Build and install:
@@ -32,7 +32,7 @@ A simple and efficient command-line tool to manage multiple Git profiles. Switch
    cargo install --path .
    ```
 
-   This will install the `git-profile-manager` binary to your Cargo bin directory (usually `~/.cargo/bin/`).
+   This will install the `git-thing` binary to your Cargo bin directory (usually `~/.cargo/bin/`).
 
 3. (Optional) Add the Cargo bin directory to your PATH if it's not already:
 
@@ -79,16 +79,15 @@ git-thing switch -p work
 
 ## How It Works
 
-- Profiles are stored in `~/.config/git-profile-manager/config.json`
+- Profiles are stored in `~/.config/git-thing/config.json`
 - Switching profiles updates:
   - Global Git username and email
   - Git credentials file (`~/.git-credentials`)
 
 ## Security Note
 
-- Personal access tokens are stored in plain text in the config file
 - The config file has standard user permissions (600)
-- For enhanced security, consider using environment variables or a credential manager
+- Personal access tokens are stored in plain text in the config file
 
 ## Contributing
 
