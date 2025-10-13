@@ -16,6 +16,7 @@ A simple and efficient command-line tool to manage multiple Git profiles. Switch
 
 - [Rust](https://www.rust-lang.org/tools/install) (latest stable version recommended)
 - Git (obviously!)
+- A github personal access token (recommended: classic token with only full repo access) [how to create a github personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic)
 
 ### Install from Source
 
