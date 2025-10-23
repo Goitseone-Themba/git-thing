@@ -12,13 +12,38 @@ A simple and efficient command-line tool to manage multiple Git profiles. Switch
 
 ## Installation
 
-### Prerequisites
+You can install git-thing in one of two ways: download the prebuilt binary, or build from source.
+
+### Download the Binary (Linux / macOS)
+
+Download the released binary and place it in /usr/bin so it's available system-wide:
+
+```bash
+# download the binary (use the raw file URL)
+curl -L -o git-thing https://raw.githubusercontent.com/Goitseone-Themba/git-thing/master/git-thing
+
+# make it executable
+chmod +x git-thing
+
+# move to /usr/bin (requires sudo)
+sudo mv git-thing /usr/bin/git-thing
+
+# (optional) ensure ownership and permissions
+sudo chown root:root /usr/bin/git-thing
+sudo chmod 755 /usr/bin/git-thing
+```
+
+After this the `git-thing` command will be available from your shell. (If you prefer a user-scoped location, move the binary into `~/bin` or `$HOME/.local/bin` instead.)
+
+### Build from Source
+
+#### Prerequisites
 
 - [Rust](https://www.rust-lang.org/tools/install) (latest stable version recommended)
 - Git (obviously!)
-- A github personal access token (recommended: classic token with only full repo access) [how to create a github personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic)
+- A GitHub personal access token (recommended: classic token with only full repo access) — see: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic
 
-### Install from Source
+#### Build and Install
 
 1. Clone the repository:
 
