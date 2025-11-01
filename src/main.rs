@@ -88,7 +88,6 @@ fn switch_profile(profile_name: &str) -> Result<()> {
     let profile = profiles.get(profile_name)
         .with_context(|| format!("Profile '{}' not found", profile_name))?;
     
-    // Update git config
     ProcessCommand::new("git")
         .args(["config", "--global", "user.name", &profile.username])
         .status()
@@ -99,7 +98,6 @@ fn switch_profile(profile_name: &str) -> Result<()> {
         .status()
         .context("Failed to set git user email")?;
     
-    // Update git credentials
     let credentials_path = dirs::home_dir()
         .context("Could not find home directory")?
         .join(".git-credentials");
@@ -112,6 +110,43 @@ fn switch_profile(profile_name: &str) -> Result<()> {
         .with_context(|| format!("Failed to write to credentials file: {:?}", credentials_path))?;
     
     println!("Switched to profile '{}' successfully!", profile_name);
+    Ok(())
+}
+
+fn update_profile(name: &str, username: Option<&String>, email: Option<&String>, access_token: Option<&String>) -> Result<()> {
+    let mut profiles = load_profiles()?;
+    
+    let profile = profiles.get_mut(name)
+        .with_context(|| format!("Profile '{}' not found", name))?;
+    
+    if let Some(username) = username {
+        profile.username = username.clone();
+    }
+    if let Some(email) = email {
+        profile.email = email.clone();
+    }
+    if let Some(access_token) = access_token {
+        profile.access_token = access_token.clone();
+    }
+    
+    save_profiles(&profiles)?;
+    println!("Profile '{}' updated successfully!", name);
+    Ok(())
+}
+
+fn delete_profile(name: &str) -> Result<()> {
+    let mut profiles = load_profiles()?;
+    
+    if !profiles.contains_key(name) {
+        return Err(anyhow::anyhow!("Profile '{}' not found", name));
+    }
+    
+    // Check if this is the currently active profile
+    // This would require tracking the active profile, which we're not currently doing
+    
+    profiles.remove(name);
+    save_profiles(&profiles)?;
+    println!("Profile '{}' deleted successfully!", name);
     Ok(())
 }
 
@@ -153,6 +188,39 @@ fn main() -> Result<()> {
                         .help("The name of the profile to switch to.")
                         .required(true)
                 ),
+            Command::new("update")
+                .about("Update an existing git profile")
+                .args([
+                    Arg::new("profilename")
+                        .long("profilename")
+                        .short('p')
+                        .help("Name of the profile to update")
+                        .required(true),
+                    Arg::new("username")
+                        .long("username")
+                        .short('u')
+                        .help("New github username (optional)")
+                        .required(false),
+                    Arg::new("email")
+                        .long("email")
+                        .short('e')
+                        .help("New github email (optional)")
+                        .required(false),
+                    Arg::new("personal_access_key")
+                        .long("personal-access-key")
+                        .short('k')
+                        .help("New github personal access key (optional)")
+                        .required(false),
+                ]),
+            Command::new("delete")
+                .about("Delete a git profile")
+                .arg(
+                    Arg::new("profilename")
+                        .long("profilename")
+                        .short('p')
+                        .help("Name of the profile to delete")
+                        .required(true)
+                ),
         ])
         .get_matches();
 
@@ -169,6 +237,18 @@ fn main() -> Result<()> {
         Some(("switch", sub_matches)) => {
             let profile_name = sub_matches.get_one::<String>("profile").unwrap();
             switch_profile(profile_name)
+        },
+        Some(("update", sub_matches)) => {
+            let profile_name = sub_matches.get_one::<String>("profilename").unwrap();
+            let username = sub_matches.get_one::<String>("username");
+            let email = sub_matches.get_one::<String>("email");
+            let access_token = sub_matches.get_one::<String>("personal_access_key");
+            
+            update_profile(profile_name, username, email, access_token)
+        },
+        Some(("delete", sub_matches)) => {
+            let profile_name = sub_matches.get_one::<String>("profilename").unwrap();
+            delete_profile(profile_name)
         },
         _ => {
             println!("No valid command provided. Use --help for usage information.");
