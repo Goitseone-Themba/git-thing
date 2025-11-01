@@ -7,6 +7,8 @@ A simple and efficient command-line tool to manage multiple Git profiles. Switch
 - 🔄 Switch between multiple Git profiles quickly
 - 🔒 Secure storage of Git credentials
 - 📋 List all configured profiles
+- ✏️ Update existing profiles
+- ❌ Remove unused profiles
 - 🛠️ Easy to install and use
 - 🚀 Built with Rust for performance and reliability
 
@@ -103,12 +105,38 @@ Or using short flag:
 git-thing switch -p work
 ```
 
+### Update an Existing Profile
+
+Update any field of an existing profile. Only the fields you specify will be updated.
+
+```bash
+# Update just the email
+git-thing update --profilename work --email new.email@example.com
+
+# Update multiple fields
+git-thing update -p work -u newusername -k newtoken123
+```
+
+### Delete a Profile
+
+Remove a profile that you no longer need:
+
+```bash
+git-thing delete --profilename oldprofile
+```
+Or using short flag:
+
+```bash
+git-thing delete -p oldprofile
+```
+
 ## How It Works
 
 - Profiles are stored in `~/.config/git-thing/config.json`
 - Switching profiles updates:
   - Global Git username and email
   - Git credentials file (`~/.git-credentials`)
+- The config file is updated when you add, update, or delete profiles
 
 ## Security Note
 
